@@ -6,14 +6,26 @@ import { RouterLink, RouterView } from 'vue-router'
 <script>
 import { ref } from 'vue'
 
-const cursorPosition = ref(null);
+const cursorPosition = ref(null)
 
 const handleButtonClick = (event) => {
   cursorPosition.value = {
     x: event.clientX,
-    y: event.clientY
-  };
-};
+    y: event.clientY,
+  }
+}
+
+// function changePosition() {
+//   setTimeout(() => {}, 1000)
+// }
+
+const changePosition = (event) => {  
+    cursorPosition.value = {
+      x: event.clientX,
+      y: event.clientY,
+    }
+    console.log(cursorPosition)
+}
 </script>
 
 
@@ -41,6 +53,10 @@ const handleButtonClick = (event) => {
         <div v-if="cursorPosition" class="position-display">
           Координаты курсора: X: {{ cursorPosition.x }}, Y: {{ cursorPosition.y }}
         </div>
+      </div>
+
+      <div class="changePosition">
+        <button @keyup.escape="changePosition">Изменить положения рамки</button>
       </div>
     </div>
   </header>
