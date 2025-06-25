@@ -19,13 +19,9 @@ const handleButtonClick = (event) => {
 function changePosition() {
   setTimeout(() => {
 
-    axios.get('http://127.0.0.1:8000/getPosition/',{
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-        })
+    axios.get('http://127.0.0.1:8000/getPosition')
       .then(response => {
-        console.log(response);
+        console.log(response.data);
       })
       .catch(error => {
         console.error('Ошибка при выполнении GET-запроса:', error);
