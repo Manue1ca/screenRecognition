@@ -1,10 +1,24 @@
 from typing import Union
 from fastapi import FastAPI, APIRouter
-import mouse
+from fastapi.middleware.cors import CORSMiddleware
 import json
+import pyautogui
 
 app = FastAPI()
 router = APIRouter()
+
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get('/')
 def read_root():
@@ -24,6 +38,13 @@ def changePosition(a:int,b:int,pos:str):
     with open('conf.json', 'w') as json_file:
         json.dump(confPos, json_file)
     return 'Позиция изменена и внесена в файл конфигурации'
+
+@router.post('/getPosition/')
+def changePosition():
+    currentMouseX, currentMouseY = pyautogui.position()
+    return {"X =", currentMouseX, "Y =", currentMouseY}
+
+
 
 app.include_router(router)
 

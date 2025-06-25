@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import axios from 'axios'
 </script>
 
 
@@ -15,17 +16,25 @@ const handleButtonClick = (event) => {
   }
 }
 
-// function changePosition() {
-//   setTimeout(() => {}, 1000)
-// }
+function changePosition() {
+  setTimeout(() => {
 
-const changePosition = (event) => {  
-    cursorPosition.value = {
-      x: event.clientX,
-      y: event.clientY,
-    }
-    console.log(cursorPosition)
+    axios.get('http://127.0.0.1:8000/getPosition/',{
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+        })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.error('Ошибка при выполнении GET-запроса:', error);
+      });
+
+  }, 1000)
 }
+
+
 </script>
 
 
@@ -56,7 +65,7 @@ const changePosition = (event) => {
       </div>
 
       <div class="changePosition">
-        <button @keyup.escape="changePosition">Изменить положения рамки</button>
+        <button @click="changePosition">Изменить положения рамки</button>
       </div>
     </div>
   </header>
